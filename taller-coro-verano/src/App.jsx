@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import heroImg from './assets/coroInfantil.jpg';
 import modelo3dImg from './assets/modelo3d.jpg';
 import instrumentalImg from './assets/instrumental.jpg';
@@ -15,40 +15,32 @@ import fotoAriana from './assets/foto6.jpg';
 export default function App() {
   const [activeTab, setActiveTab] = useState('diagnostico');
   const [selectedClase, setSelectedClase] = useState(null);
-  const [openRubro, setOpenRubro] = useState(null); // Inicia en null para que todo esté colapsado por defecto
+  const [openRubro, setOpenRubro] = useState(null);
+
+  // Enlace del formulario de Google Forms
+  const LINK_FORMULARIO = "https://forms.google.com";
+
+  // Seteo dinámico del favicon con la notita musical en el <head>
+  useEffect(() => {
+    let link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.getElementsByTagName('head')[0].appendChild(link);
+    }
+    const musicIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23f59e0b"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>`;
+    link.href = `data:image/svg+xml;utf8,${encodeURIComponent(musicIconSvg)}`;
+    document.title = "Al calor de las voces - Taller Coral";
+  }, []);
 
   // Nómina oficial del Equipo de Responsables
   const equipoIntegrantes = [
-    {
-      nombre: 'Ivonne Aguilera',
-      rol: 'Profesora de Música',
-      foto: fotoIvonne
-    },
-    {
-      nombre: 'Diana Pérez',
-      rol: 'Jefa de cuerda e Instrumentista - Tecnóloga Educativa',
-      foto: fotoDiana
-    },
-    {
-      nombre: 'Ana Salazar',
-      rol: 'Auxiliar docente - Referente Barrial',
-      foto: fotoAna
-    },
-    {
-      nombre: 'Andrea Carrizo',
-      rol: 'Maestra de apoyo a la inclusión (M.A.I)',
-      foto: fotoAndrea
-    },
-    {
-      nombre: 'Huayra Martincic',
-      rol: 'Gestión Administrativa',
-      foto: fotoHuayra
-    },
-    {
-      nombre: 'Ariana Velasco',
-      rol: 'Prensa y difusión',
-      foto: fotoAriana
-    }
+    { nombre: 'Ivonne Aguilera', rol: 'Profesora de Música', foto: fotoIvonne },
+    { nombre: 'Diana Pérez', rol: 'Jefa de cuerda e Instrumentista - Tecnóloga Educativa', foto: fotoDiana },
+    { nombre: 'Ana Salazar', rol: 'Auxiliar docente - Referente Barrial', foto: fotoAna },
+    { nombre: 'Andrea Carrizo', rol: 'Maestra de apoyo a la inclusión (M.A.I)', foto: fotoAndrea },
+    { nombre: 'Huayra Martincic', rol: 'Gestión Administrativa', foto: fotoHuayra },
+    { nombre: 'Ariana Velasco', rol: 'Prensa y difusión', foto: fotoAriana }
   ];
 
   // Datos estructurados del Presupuesto por Rubros (14 ítems)
@@ -91,86 +83,16 @@ export default function App() {
       icono: 'ri-box-3-line',
       colorBadge: 'bg-warning text-dark',
       items: [
-        {
-          num: '03',
-          detalle: 'Fotocopias de cancionero',
-          estado: 'A CONSEGUIR',
-          cantidad: '240',
-          precioUnitario: 300,
-          subtotal: 72000
-        },
-        {
-          num: '04',
-          detalle: 'Instrumento musical (Teclado eléctrico). Referencia: Mercado Libre',
-          estado: 'DISPONIBLE',
-          cantidad: '1',
-          precioUnitario: 318000,
-          subtotal: 318000
-        },
-        {
-          num: '05',
-          detalle: 'Modelos anatómicos impresos en 3D',
-          estado: 'DISPONIBLE: DONACIÓN',
-          cantidad: '6',
-          precioUnitario: 20000,
-          subtotal: 120000
-        },
-        {
-          num: '06',
-          detalle: 'Lavandina',
-          estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES',
-          cantidad: '4 botellas de 1L',
-          precioUnitario: 2189,
-          subtotal: 8756
-        },
-        {
-          num: '07',
-          detalle: 'Papel higiénico',
-          estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES',
-          cantidad: 'Pack 90 metros x 6 unidades',
-          precioUnitario: 9150,
-          subtotal: 9150
-        },
-        {
-          num: '08',
-          detalle: 'Bidón de agua',
-          estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES',
-          cantidad: 'Bidón 20L',
-          precioUnitario: 6500,
-          subtotal: 13000
-        },
-        {
-          num: '09',
-          detalle: 'Vasos - descartable Stendy 500cc Transparente Liviano',
-          estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES',
-          cantidad: 'Pack X50 Unidades',
-          precioUnitario: 7989,
-          subtotal: 7989
-        },
-        {
-          num: '10',
-          detalle: 'Guantes Mapa Plisse Satinado Naranja | Virulana Pirelli',
-          estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES',
-          cantidad: '2 pares',
-          precioUnitario: 4140,
-          subtotal: 8280
-        },
-        {
-          num: '11',
-          detalle: 'Trapo De Piso Tejido Gris M Reforzado Media Naranja',
-          estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES',
-          cantidad: '1',
-          precioUnitario: 3500,
-          subtotal: 3500
-        },
-        {
-          num: '12',
-          detalle: 'Rejilla Doble Reforzada Media Naranja',
-          estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES',
-          cantidad: '3',
-          precioUnitario: 2700,
-          subtotal: 8100
-        }
+        { num: '03', detalle: 'Fotocopias de cancionero', estado: 'A CONSEGUIR', cantidad: '240', precioUnitario: 300, subtotal: 72000 },
+        { num: '04', detalle: 'Instrumento musical (Teclado eléctrico). Referencia: Mercado Libre', estado: 'DISPONIBLE', cantidad: '1', precioUnitario: 318000, subtotal: 318000 },
+        { num: '05', detalle: 'Modelos anatómicos impresos en 3D', estado: 'DISPONIBLE: DONACIÓN', cantidad: '6', precioUnitario: 20000, subtotal: 120000 },
+        { num: '06', detalle: 'Lavandina', estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES', cantidad: '4 botellas de 1L', precioUnitario: 2189, subtotal: 8756 },
+        { num: '07', detalle: 'Papel higiénico', estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES', cantidad: 'Pack 90 metros x 6 unidades', precioUnitario: 9150, subtotal: 9150 },
+        { num: '08', detalle: 'Bidón de agua', estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES', cantidad: 'Bidón 20L', precioUnitario: 6500, subtotal: 13000 },
+        { num: '09', detalle: 'Vasos - descartable Stendy 500cc Transparente Liviano', estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES', cantidad: 'Pack X50 Unidades', precioUnitario: 7989, subtotal: 7989 },
+        { num: '10', detalle: 'Guantes Mapa Plisse Satinado Naranja | Virulana Pirelli', estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES', cantidad: '2 pares', precioUnitario: 4140, subtotal: 8280 },
+        { num: '11', detalle: 'Trapo De Piso Tejido Gris M Reforzado Media Naranja', estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES', cantidad: '1', precioUnitario: 3500, subtotal: 3500 },
+        { num: '12', detalle: 'Rejilla Doble Reforzada Media Naranja', estado: 'A CONSEGUIR. BÚSQUEDA DE DONACIONES', cantidad: '3', precioUnitario: 2700, subtotal: 8100 }
       ]
     },
     {
@@ -179,27 +101,12 @@ export default function App() {
       icono: 'ri-truck-line',
       colorBadge: 'bg-secondary',
       items: [
-        {
-          num: '13',
-          detalle: 'Combustible para traslado del personal (VEHÍCULOS DISPONIBLES, COMBUSTIBLE A CONSEGUIR)',
-          estado: 'A CONSEGUIR',
-          cantidad: '4 (tanques)',
-          precioUnitario: 90000,
-          subtotal: 360000
-        },
-        {
-          num: '14',
-          detalle: 'Transporte teclado',
-          estado: 'A CONSEGUIR',
-          cantidad: '16 (viajes)',
-          precioUnitario: 10000,
-          subtotal: 160000
-        }
+        { num: '13', detalle: 'Combustible para traslado del personal (VEHÍCULOS DISPONIBLES, COMBUSTIBLE A CONSEGUIR)', estado: 'A CONSEGUIR', cantidad: '4 (tanques)', precioUnitario: 90000, subtotal: 360000 },
+        { num: '14', detalle: 'Transporte teclado', estado: 'A CONSEGUIR', cantidad: '16 (viajes)', precioUnitario: 10000, subtotal: 160000 }
       ]
     }
   ];
 
-  // Cálculo dinámico del Total General ($2.180.775 ARS)
   const totalPresupuesto = presupuestoRubros.reduce(
     (accRubro, rubro) => accRubro + rubro.items.reduce((accItem, item) => accItem + item.subtotal, 0),
     0
@@ -230,7 +137,7 @@ export default function App() {
           backgroundImage: `linear-gradient(rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.88)), url(${heroImg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          minHeight: '380px',
+          minHeight: '400px',
           display: 'flex',
           alignItems: 'center'
         }}
@@ -247,6 +154,7 @@ export default function App() {
               <p className="lead text-light mb-4 fs-4 opacity-90" style={{ maxWidth: '680px' }}>
                 Taller coral de verano e integración artística para infancias de 6 a 12 años en la Zona de Chacras, Caleta Olivia.
               </p>
+              
               <div className="d-flex flex-wrap gap-3 align-items-center">
                 <span className="d-inline-flex align-items-center gap-2 bg-white bg-opacity-10 backdrop-blur border border-white border-opacity-25 px-3 py-2 rounded-pill text-white small">
                   <i className="ri-calendar-event-line text-warning fs-5"></i> Enero – Febrero 2027
@@ -254,6 +162,16 @@ export default function App() {
                 <span className="d-inline-flex align-items-center gap-2 bg-white bg-opacity-10 backdrop-blur border border-white border-opacity-25 px-3 py-2 rounded-pill text-white small">
                   <i className="ri-map-pin-line text-warning fs-5"></i> SUM Unión Vecinal
                 </span>
+                
+                {/* Botón de inscripción principal */}
+                <a
+                  href={LINK_FORMULARIO}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-warning btn-lg fw-bold px-4 py-2 rounded-pill shadow d-inline-flex align-items-center gap-2 text-dark"
+                >
+                  <i className="ri-edit-box-line fs-5"></i> ¡Inscribite acá!
+                </a>
               </div>
             </div>
           </div>
@@ -305,9 +223,10 @@ export default function App() {
                     <i className="ri-government-line text-warning"></i> Marco Normativo y Derechos
                   </h6>
                   <small className="text-muted d-block mb-2">
-                    El proyecto se encuadra en las recomendaciones de la UNESCO para la descentralización cultural y los marcos de infancia (Vich) como sujetos de pleno derecho.
+                    El proyecto se encuadra en las recomendaciones de la UNESCO para la descentralización cultural y los aportes de Víctor Vich sobre la gestión cultural orientada al desarrollo de la comunidad y la democratización del espacio público.
                   </small>
                 </div>
+                
                 <div className="row g-2 mt-auto">
                   <div className="col-6">
                     <div className="p-3 bg-warning bg-opacity-10 rounded border border-warning">
@@ -383,12 +302,7 @@ export default function App() {
               <div className="row g-4">
                 <div className="col-md-4">
                   <div className="card border h-100 shadow-sm overflow-hidden">
-                    <img
-                      src={modelo3dImg}
-                      alt="Modelo Anatómico 3D de Laringe"
-                      className="card-img-top"
-                      style={{ height: '180px', objectFit: 'cover' }}
-                    />
+                    <img src={modelo3dImg} alt="Modelo Anatómico 3D de Laringe" className="card-img-top" style={{ height: '180px', objectFit: 'cover' }} />
                     <div className="card-body p-3 text-center">
                       <h6 className="fw-bold text-dark mb-1">Modelos Anatómicos 3D</h6>
                       <small className="text-muted">Aportados por LabTEM. Modelos táctiles desarmables de la laringe para comprensión kinestésica del canto.</small>
@@ -398,12 +312,7 @@ export default function App() {
 
                 <div className="col-md-4">
                   <div className="card border h-100 shadow-sm overflow-hidden">
-                    <img
-                      src={instrumentalImg}
-                      alt="Apoyo Instrumental Musical"
-                      className="card-img-top"
-                      style={{ height: '180px', objectFit: 'cover' }}
-                    />
+                    <img src={instrumentalImg} alt="Apoyo Instrumental Musical" className="card-img-top" style={{ height: '180px', objectFit: 'cover' }} />
                     <div className="card-body p-3 text-center">
                       <h6 className="fw-bold text-dark mb-1">Apoyo Instrumental</h6>
                       <small className="text-muted">Teclado y recursos sonoros de apoyo melódico, armónico y de afinación para los ejercicios grupales.</small>
@@ -413,12 +322,7 @@ export default function App() {
 
                 <div className="col-md-4">
                   <div className="card border h-100 shadow-sm overflow-hidden">
-                    <img
-                      src={vecinalImg}
-                      alt="Sede SUM Unión Vecinal"
-                      className="card-img-top"
-                      style={{ height: '180px', objectFit: 'cover' }}
-                    />
+                    <img src={vecinalImg} alt="Sede SUM Unión Vecinal" className="card-img-top" style={{ height: '180px', objectFit: 'cover' }} />
                     <div className="card-body p-3 text-center">
                       <h6 className="fw-bold text-dark mb-1">SUM Unión Vecinal</h6>
                       <small className="text-muted">Infraestructura barrial accesible y libre de barreras arquitectónicas para la comunidad.</small>
@@ -441,11 +345,7 @@ export default function App() {
                 const isOpen = selectedClase === item.num;
                 return (
                   <div className="col-md-6" key={item.num}>
-                    <div
-                      className={`p-3 rounded border bg-white shadow-sm transition ${
-                        isOpen ? 'border-warning' : ''
-                      }`}
-                    >
+                    <div className={`p-3 rounded border bg-white shadow-sm transition ${isOpen ? 'border-warning' : ''}`}>
                       <div
                         className="d-flex justify-content-between align-items-center cursor-pointer"
                         onClick={() => setSelectedClase(isOpen ? null : item.num)}
@@ -462,7 +362,6 @@ export default function App() {
                         {item.titulo}
                       </h6>
                       
-                      {/* Contenido desplegable */}
                       {isOpen && (
                         <div className="mt-2 pt-2 border-top text-secondary small">
                           <p className="mb-0">{item.desc}</p>
@@ -488,12 +387,7 @@ export default function App() {
                 <div className="col-12 col-sm-6 col-md-4" key={idx}>
                   <div className="card border-0 shadow-sm h-100 p-4 text-center d-flex flex-column align-items-center bg-white rounded-3">
                     <div className="mb-3 overflow-hidden rounded-circle shadow-sm" style={{ width: '150px', height: '150px' }}>
-                      <img
-                        src={member.foto}
-                        alt={member.nombre}
-                        className="w-100 h-100"
-                        style={{ objectFit: 'cover' }}
-                      />
+                      <img src={member.foto} alt={member.nombre} className="w-100 h-100" style={{ objectFit: 'cover' }} />
                     </div>
                     <h5 className="fw-bold text-dark mb-1 fs-6">{member.nombre}</h5>
                     <p className="text-muted small mb-0">{member.rol}</p>
@@ -504,7 +398,7 @@ export default function App() {
           </div>
         )}
 
-        {/* Pestaña 5: Presupuesto (Colapsado por defecto) */}
+        {/* Pestaña 5: Presupuesto */}
         {activeTab === 'presupuesto' && (
           <div className="card border-0 shadow-sm p-4">
             <div className="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4 flex-wrap gap-2">
@@ -524,12 +418,11 @@ export default function App() {
 
             <div className="d-flex flex-column gap-3">
               {presupuestoRubros.map((rubro) => {
-                const isRubroOpen = openRubro === rubro.id; // Solamente abierto si coincide con el rubro activo
+                const isRubroOpen = openRubro === rubro.id;
                 const subtotalRubro = rubro.items.reduce((acc, item) => acc + item.subtotal, 0);
 
                 return (
                   <div key={rubro.id} className="border rounded overflow-hidden bg-white shadow-sm">
-                    {/* Encabezado del Rubro con Color y Flecha de colapso */}
                     <div
                       className="p-3 bg-light d-flex align-items-center justify-content-between cursor-pointer user-select-none"
                       onClick={() => toggleRubro(rubro.id)}
@@ -559,7 +452,6 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* Tabla de ítems desplegable */}
                     {isRubroOpen && (
                       <div className="table-responsive border-top">
                         <table className="table table-hover align-middle m-0">
@@ -603,7 +495,6 @@ export default function App() {
               })}
             </div>
 
-            {/* Fila del Total General */}
             <div className="mt-4 p-3 bg-dark text-white rounded d-flex justify-content-between align-items-center flex-wrap gap-2">
               <span className="fw-bold fs-5 d-flex align-items-center gap-2">
                 <i className="ri-calculator-line text-warning"></i> TOTAL GENERAL DEL PRESUPUESTO
@@ -615,6 +506,21 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* Pie de página con Call to Action de inscripción */}
+      <footer className="bg-dark text-white py-4 mt-5">
+        <div className="container text-center">
+          <p className="mb-2 text-light opacity-75">Taller Coral de Verano "Al calor de las voces" · Zona de Chacras, Caleta Olivia</p>
+          <a
+            href={LINK_FORMULARIO}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-warning fw-bold px-4 py-2 rounded-pill text-dark shadow-sm d-inline-flex align-items-center gap-2"
+          >
+            <i className="ri-music-2-line"></i> ¡Inscribite acá a través de Google Forms!
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
